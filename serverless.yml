@@ -1,0 +1,55 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: cristian21
+app: my-serverless-java-app 
+service: serverless-java-api
+
+provider:
+  name: aws
+  runtime: java11
+  region: us-east-1
+  environment:
+    DYNAMODB_USERS_TABLE: Users
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:PutItem'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:Scan'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource: arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/Users
+
+package:
+  artifact: target/serverless-java-api-1.0-SNAPSHOT.jar
+
+functions:
+  createUser:
+    handler: com.example.CreateUserHandler::handleRequest
+    events:
+      - http:
+          path: users
+          method: post
+  getUserById:
+    handler: com.example.GetUserByIdHandler::handleRequest
+    events:
+      - http:
+          path: users/{id}
+          method: get
+
+resources:
+  Resources:
+    UsersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

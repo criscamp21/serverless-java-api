@@ -1,0 +1,3 @@
+com\example\model\User.class
+com\example\CreateUserHandler.class
+com\example\GetUserByIdHandler.class
