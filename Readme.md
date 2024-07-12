@@ -47,4 +47,4 @@ Endpoint: GET https://kig1pjd8mi.execute-api.us-east-1.amazonaws.com/dev/users/{
 
 Repository GitHub
 
-Il progetto è disponibile su GitHub al seguente link: [GitHub Repository](https://github.com/tuo-username/serverless-java-api)
+Il progetto è disponibile su GitHub al seguente link: [GitHub Repository](https://github.com/criscamp21/serverless-java-api)
